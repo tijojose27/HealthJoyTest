@@ -12,9 +12,6 @@ import com.example.healthjoy.R
 import com.example.healthjoy.Util.Constants.Companion.API_KEY
 import com.example.healthjoy.databinding.FragmentFirstBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
@@ -26,7 +23,7 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,8 +41,11 @@ class FirstFragment : Fragment() {
             }
 
             override fun afterTextChanged(edTxt: Editable?) {
-                binding.buttonFirst.isEnabled = !edTxt.toString().isNullOrEmpty()
-//                API_KEY = edTxt.toString()
+                val api_key = edTxt.toString()
+                if (!api_key.isNullOrEmpty()) {
+                    API_KEY = api_key
+                    binding.buttonFirst.isEnabled = !edTxt.toString().isNullOrEmpty()
+                }
             }
 
         })

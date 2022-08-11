@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.healthjoy.Model.GliphyResponseModel
+import com.example.healthjoy.R
 import com.example.healthjoy.databinding.RecyclerViewItemBinding
 
 class GlifyAdapter(private val context: Context) : ListAdapter<GliphyResponseModel.GliphyData, GlifyAdapter.ViewHolder>(GlifyAdapterDiffCallback()) {
@@ -29,10 +30,19 @@ class GlifyAdapter(private val context: Context) : ListAdapter<GliphyResponseMod
     inner class ViewHolder(private val itemViewBinding: RecyclerViewItemBinding) : RecyclerView.ViewHolder(itemViewBinding.root) {
 
         fun setupUI(gliphyModel: GliphyResponseModel.GliphyData){
-            itemViewBinding.userNameTV.text = gliphyModel.username
-            itemViewBinding.descriptionTV.text = gliphyModel.user.description
+            if (gliphyModel.username.isEmpty())
+                itemViewBinding.userNameTV.text = "No Username"
+            else
+                itemViewBinding.userNameTV.text = gliphyModel.username
+
+            if (gliphyModel.user.description.isEmpty())
+                itemViewBinding.descriptionTV.text = "No Description"
+            else
+                itemViewBinding.descriptionTV.text = gliphyModel.user.description
+
             Glide.with(context)
                 .load(gliphyModel.user.avatarUrl)
+                .placeholder(R.drawable.ic_baseline_person_24)
                 .skipMemoryCache(false)
                 .into(itemViewBinding.avatarIV)
             Glide.with(context)
